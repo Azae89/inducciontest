@@ -10,9 +10,9 @@ ALLOWED_HOSTS = []
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': get_secret('DB_NAME'),
-        'USER': get_secret('USER'),
-        'PASSWORD': get_secret('PASSWORD'),
+        'NAME': 'inducciondb',
+        'USER': 'aaspajo2',
+        'PASSWORD': '112358Root2',
         'HOST': 'localhost',
         'PORT': '3360',
     }
