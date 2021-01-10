@@ -1,0 +1,129 @@
+{% extends "induccion/base_induccion.html" %}
+{% load  static %}
+
+{% block content %}
+
+{% include "includes/header.html" %}
+
+
+<div class="grid-container">
+	 <div class="grid-x grid-margin-x" style="margin-top: 1em;">
+	 	<div class="cell small-12 large-8">
+	 		<div class="grid-x grid-margin-x">
+	            {% for evento in eventos %}
+
+	                <div class="cell small-6 large-6">
+	                    <div class="card" style="width: 100%;">
+	           				
+	                        <div class="card-section">
+	                          <h4>{{ evento.title| truncatechars:20}}</h4>
+	                          <p>{{ evento.description }}</p>
+	                          <p><b>Publico</b> = 
+
+
+                                    {% if evento.public == "1" %}
+                                        Todos
+                                    {% else %}
+                                        {% if evento.public == "2" %}
+                                            Personal Interno
+                                        {% else %}
+                                            Invitado
+                                        {% endif %}
+                                    {% endif %}
+
+
+                            </p>
+	                          <p>Aforo = {{ evento.aforo}}</p>
+	                          <p>Fecha y hora = {{ evento.DateIni }}</p>
+	                          <p>Duración = {{ evento.duration }}</p>
+                             <p>Estado = 
+
+
+                                    {% if evento.state == "1" %}
+                                        Registrado
+                                    {% else %}
+                                        {% if evento.state == "2" %}
+                                            En curso
+                                        {% else %}
+                                            Terminado
+                                        {% endif %}
+                                    {% endif %}
+
+                             </p>
+
+                             {% if evento.state == "1" %}
+                              <form class="grid-x grid-margin-x" method="POST" action="{% url 'induccion_app:create-session' %}">{% csrf_token %}
+                               <div class="input-group-button">
+                               <input type="hidden" id="id" name="id" value="{{ evento.id }}">
+                                <input type="submit" class="button" value="Iniciar Sala">
+                               </div>
+                            </form>
+                                    {% else %}
+                                        {% if evento.state == "2" %}
+       
+                               <div class="input-group-button">
+                                  <a href="{% url 'induccion_app:in-session' evento.id %}" class="button warning">
+                               Entrar Sala"</a>
+
+                               
+                               </div>
+                                       {% else %}
+                                            Evento Finalizado
+                                        {% endif %}
+                                    {% endif %}
+
+
+
+                       
+
+
+
+	                        </div>
+	                    </div>
+	                </div>
+	            {% empty %}
+	            <h3 style="color:red">No hay resultados</h3>
+
+	            {% endfor %}
+       
+            </div>
+	 	</div>
+
+	 </div>
+
+	 <!-- inicio de bloque de paginacion -->
+    <div class="cell">
+      {% if is_paginated %}
+      <nav aria-label="Pagination">
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+            <li class="pagination-previous">
+              <a href="?page={{ page_obj.previous_page_number}}" aria-label="Page 2">Atras</a>
+            </li>
+          {% endif %}
+          {% for pagina in paginator.page_range %}
+
+          {% ifequal pagina page_obj.number%}
+          <li class="current">
+            <span class="show-for-sr">You're on page</span> {{pagina}}</li>
+          {% else %}
+            <li>
+            <a href="?page={{pagina}}" aria-label="Page {{pagina}}">{{pagina}}</a>
+            </li>
+          {% endifequal %}
+          {% endfor %}
+          {% if page_obj.has_next %}
+          <li class="pagination-next"><a href="#" aria-label="Next page">
+            <a href="?page={{ page_obj.next_page_number}}" aria-label="Page 2">Siguiente</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+      </a></li></ul></nav></div>
+      
+</div>
+
+{% include "includes/footer.html" %}
+
+{% endblock content %}
