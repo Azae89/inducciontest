@@ -7,12 +7,13 @@ ALLOWED_HOSTS = []
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': get_secret('DB_NAME'),
-        'USER': get_secret('USER'),
-        'PASSWORD': get_secret('PASSWORD'),
+        'NAME': 'inducciondb',
+        'USER': 'aaspajo2',
+        'PASSWORD': '112358Root2',
         'HOST': 'localhost',
         'PORT': '3360',
     }
