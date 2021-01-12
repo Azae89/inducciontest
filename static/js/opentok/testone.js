@@ -23,7 +23,7 @@ session.on({
 
 
 
-      //console.log(event.target.connection.permissions) 
+      console.log(event.target.connection.permissions) 
       //console.log(event.target.connection.permissions.publish) 
       console.log("Esto es primero") 
 
